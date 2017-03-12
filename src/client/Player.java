@@ -1,5 +1,6 @@
 package client;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,8 +19,9 @@ public class Player extends Thread{
 	SourceDataLine speaker;
 
 	public Player(InputStream is){
-		try {    		
-			audioInputStream = AudioSystem.getAudioInputStream(is);
+		try {    	
+			InputStream bufferedIn = new BufferedInputStream(is);
+			audioInputStream = AudioSystem.getAudioInputStream(bufferedIn);
 			format = audioInputStream.getFormat(); 
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
