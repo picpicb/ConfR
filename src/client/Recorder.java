@@ -1,6 +1,7 @@
 package client;
 
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.OutputStream;
 
@@ -12,11 +13,11 @@ import javax.sound.sampled.TargetDataLine;
 public class Recorder extends Thread {
 	private AudioFormat format;
 	private TargetDataLine microphone;
-	private DataOutputStream out;
+	private BufferedOutputStream out;
 	private boolean conditionStop;
 
 	public Recorder(OutputStream out){
-		this.out = new DataOutputStream(out);
+		this.out = new BufferedOutputStream(out);
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
 		conditionStop = true;
 	}
@@ -30,7 +31,7 @@ public class Recorder extends Thread {
 			System.out.println("Mic open.");
 
 			int numBytesRead;
-			int CHUNK_SIZE = 1024;
+			int CHUNK_SIZE = 2048;
 			byte[] data = new byte[microphone.getBufferSize() / 5];
 			microphone.start();
 			int bytesRead = 0;
