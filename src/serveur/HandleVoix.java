@@ -1,6 +1,7 @@
 package serveur;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class HandleVoix extends Thread{
 			if(c.getIp() != ip){
 				try {
 					new VoixSocket(s.getInputStream(),c.getIp()).start();
+					new VoixSocket(c.getVoix(),ip).start();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -35,5 +37,14 @@ public class HandleVoix extends Thread{
 	
 	public String getIp(){
 		return ip;
+	}
+	public InputStream getVoix(){
+		try {
+			return s.getInputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
