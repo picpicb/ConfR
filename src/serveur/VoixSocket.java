@@ -19,7 +19,7 @@ public class VoixSocket extends Thread{
 	}
 	
 	public void run(){
-		System.out.println("VoixSocket -- Connexion Ã  :"+ip);
+		System.out.println("VoixSocket -- Connexion a  :"+ip);
 		try {
 			s = new Socket(ip, 5500);
 			OutputStream out = s.getOutputStream();

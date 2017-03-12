@@ -28,7 +28,7 @@ public class ServerVoix extends Thread{
 					Socket s = ss.accept();
 					HandleVoix client = new HandleVoix(s);
 					listeUser.add(client);
-					System.out.println("Nouveau client connecte au server Voix: "+ client.getIp());
+					System.out.println("Nouveau client connecte au server  Voix: "+ client.getIp());
 					for(HandleVoix c : listeUser){
 						if(client.getIp() != c.getIp()){
 							try {

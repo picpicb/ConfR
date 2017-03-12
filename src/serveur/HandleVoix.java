@@ -12,7 +12,7 @@ public class HandleVoix{
 		String str = s.getRemoteSocketAddress().toString();
 		String delims = "[/:]+";
 		String[] tokens = str.split(delims);
-		this.ip = tokens[1];
+		this.ip = tokens[1]; 
 	}
 
 
