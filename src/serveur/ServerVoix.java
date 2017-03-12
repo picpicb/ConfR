@@ -8,9 +8,13 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 
 import client.Player;
 
@@ -18,8 +22,9 @@ public class ServerVoix extends Thread{
 	boolean stop = false;
 	ArrayList<HandleVoix> listeUser;
 
-	public ServerVoix(ArrayList<HandleVoix> listeUser){
+	public ServerVoix(ArrayList<HandleVoix> listeUser) throws LineUnavailableException{
 		this.listeUser = listeUser;
+		
 	}
 	
 	
@@ -29,13 +34,10 @@ public class ServerVoix extends Thread{
 			ss.setSoTimeout(1000);
 			while (!stop) {
 				try {
-					Socket s = ss.accept();
-					//HandleVoix client = new HandleVoix(s,listeUser);
-					//listeUser.add(client);
-					if (s.isConnected()) {
-	                    InputStream in = new BufferedInputStream(s.getInputStream());
-	                    play(in);
-	                }
+					Socket s = ss.accept();					
+					HandleVoix client = new HandleVoix(s,listeUser);
+					listeUser.add(client);
+					
 					//new Player(s.getInputStream()).start();
 					//client.start();
 				} catch (SocketTimeoutException ex) {
@@ -50,16 +52,7 @@ public class ServerVoix extends Thread{
 	}
 
 
-	private static synchronized void play(final InputStream in) throws Exception {
-        AudioInputStream ais = AudioSystem.getAudioInputStream(in);
-        try (Clip clip = AudioSystem.getClip()) {
-        	System.out.println("LECTURE");
-            clip.open(ais);
-            clip.start();
-            Thread.sleep(100); // given clip.drain a chance to start
-            clip.drain();
-        }
-    }
+
 	
 	public synchronized void finish() {
 		stop = true;

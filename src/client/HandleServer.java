@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import javax.sound.sampled.LineUnavailableException;
+
 public class HandleServer extends Thread {
 
 	private int port;
@@ -23,6 +25,9 @@ public class HandleServer extends Thread {
 					Socket s = ss.accept();
 					new Player(s.getInputStream()).start();
 				} catch (SocketTimeoutException ex) {
+				} catch (LineUnavailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {
