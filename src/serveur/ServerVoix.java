@@ -28,7 +28,6 @@ public class ServerVoix extends Thread{
 					Socket s = ss.accept();
 					HandleVoix client = new HandleVoix(s,listeUser);
 					listeUser.add(client);
-					client.start();
 				} catch (SocketTimeoutException ex) {
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -34,7 +34,6 @@ public class Player extends Thread{
 				if (streamIn.available() <= 0)
 				    continue;
 				int readCount= streamIn.read(data, 0, data.length);
-	            System.out.println(readCount);
 	            if(readCount>0){
 	                speaker.write(data, 0, readCount);
 	            }
