@@ -41,7 +41,7 @@ public class Recorder extends Thread {
 					}
 					numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
 					bytesRead = bytesRead + numBytesRead;
-					System.out.println(bytesRead);
+					//System.out.println(bytesRead);
 					out.write(data, 0, numBytesRead);
 				}
 			} catch (Exception e) {

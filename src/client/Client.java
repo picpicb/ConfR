@@ -7,7 +7,7 @@ import java.net.Socket;
 public class Client {
 	public static void main(String[] args) {
 		
-		String ip = args[0];
+		String ip = "192.168.0.29";
 		//String pseudo = args[1];
 		
 		//Creation de l'interface graphique du client

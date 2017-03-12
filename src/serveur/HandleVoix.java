@@ -11,7 +11,11 @@ public class HandleVoix extends Thread{
 
 	public HandleVoix(Socket s,ArrayList<HandleVoix> listeUser){
 		this.s = s;
-		this.ip = s.getRemoteSocketAddress().toString();
+		
+		String str = s.getRemoteSocketAddress().toString();
+		String delims = "[/:]+";
+		String[] tokens = str.split(delims);
+		this.ip = tokens[1];
 		this.listeUser = listeUser;
 	}
 
