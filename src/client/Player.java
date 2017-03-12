@@ -31,6 +31,7 @@ public class Player extends Thread{
 	}
 
 	public void run(){
+		System.out.println("nouvelle voix !");
 		try{
 			DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, format);
 			speaker = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
