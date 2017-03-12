@@ -15,14 +15,7 @@ public class Client {
 		
 		
 		
-		//Ecoute du port 5500 pour les donnees voix
-		HandleServer voix;
-		try {
-			voix = new HandleServer(5500);
-			voix.start();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+
 		
 		
 		//Connexion au serveur pour la gestion		
@@ -37,6 +30,15 @@ public class Client {
 			microphone.start();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//Ecoute du port 5500 pour les donnees voix
+		HandleServer voix;
+		try {
+			voix = new HandleServer(5500);
+			voix.start();
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
