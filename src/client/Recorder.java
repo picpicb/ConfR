@@ -31,7 +31,7 @@ public class Recorder extends Thread {
 			System.out.println("Mic open.");
 
 			int numBytesRead;
-			int CHUNK_SIZE = 2048;
+			int CHUNK_SIZE = 1024;
 			byte[] data = new byte[microphone.getBufferSize() / 5];
 			microphone.start();
 			int bytesRead = 0;

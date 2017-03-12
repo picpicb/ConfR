@@ -23,7 +23,7 @@ public class VoixSocket extends Thread{
 		try {
 			s = new Socket(ip, 5500);
 			OutputStream out = s.getOutputStream();
-			 byte buffer[] = new byte[2048];
+			 byte buffer[] = new byte[1024];
              int count;
              while ((count = voix.read(buffer)) != -1)
                  out.write(buffer, 0, count);
