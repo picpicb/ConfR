@@ -1,7 +1,9 @@
 package serveur;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -27,7 +29,11 @@ public class ServerVoix extends Thread{
 			while (!stop) {
 				try {
 					Socket s = ss.accept();
-					HandleVoix client = new HandleVoix(s);
+					BufferedReader is = new BufferedReader(new InputStreamReader(s.getInputStream()));
+					String line = is.readLine();
+					
+					
+					HandleVoix client = new HandleVoix(s,line);
 					System.out.println("Nouveau client connecte au server  Voix: "+ client.getIp());
 					VoixSocket vs = new VoixSocket(client.getSocket().getInputStream(),client.getIp());
 					listeRetour.add(vs);
