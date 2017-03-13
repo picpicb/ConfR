@@ -11,11 +11,12 @@ import javax.sound.sampled.LineUnavailableException;
 
 public class ServerVoix extends Thread{
 	boolean stop = false;
-	ArrayList<HandleVoix> listeUser;
+	ArrayList<HandleVoix> listeVoix;
+	ArrayList<VoixSocket> listeRetour;
 
 	public ServerVoix(ArrayList<HandleVoix> listeUser) throws LineUnavailableException{
-		this.listeUser = listeUser;
-
+		this.listeVoix = listeUser;
+		listeRetour = new ArrayList<VoixSocket>();
 	}
 
 
@@ -27,20 +28,24 @@ public class ServerVoix extends Thread{
 				try {
 					Socket s = ss.accept();
 					HandleVoix client = new HandleVoix(s);
-					listeUser.add(client);
 					System.out.println("Nouveau client connecte au server  Voix: "+ client.getIp());
-					for(HandleVoix c : listeUser){
-						if(client.getIp() != c.getIp()){
-							try {
-								new VoixSocket(client.getSocket().getInputStream(),c.getIp()).start();
-								new VoixSocket(c.getSocket().getInputStream(),client.getIp()).start();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
+					VoixSocket vs = new VoixSocket(client.getSocket().getInputStream(),client.getIp());
+					listeRetour.add(vs);
+
+
+					for(HandleVoix v : listeVoix){
+						if(v.getIp() != client.getIp()){
+							vs.addRetour(v);
 						}
-
-
 					}
+					for(VoixSocket r : listeRetour){
+						if(r.getIp() != client.getIp()){
+							r.addRetour(client);
+						}
+					}
+					listeVoix.add(client);
+					vs.start();
+
 				} catch (SocketTimeoutException ex) {
 				} catch (Exception e) {
 					e.printStackTrace();
