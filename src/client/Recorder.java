@@ -38,6 +38,7 @@ public class Recorder extends Thread {
 				while (true) { 
 					while (conditionStop) {
 						Thread.sleep(300);
+						microphone.flush();
 					}
 					numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
 					bytesRead = bytesRead + numBytesRead;

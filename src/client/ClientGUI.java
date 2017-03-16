@@ -35,7 +35,7 @@ public class ClientGUI {
        
         
 		//boutonConnexion = new JButton("Connexion");
-		mute = new JButton("Mute");
+		mute = new JButton("Couper le micro");
 		mute.addActionListener(muteListener);
 
 		//fenetre.add(boutonConnexion,BorderLayout.NORTH);

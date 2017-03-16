@@ -9,7 +9,7 @@ public class Client {
 	public static void main(String[] args) {
 		
 		String ip = "10.0.0.119";
-		String pseudo = "obama";
+		String pseudo = "Jean-Mi";
 		Recorder microphone = null;
 
 		
