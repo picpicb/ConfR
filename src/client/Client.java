@@ -8,7 +8,7 @@ import java.net.Socket;
 public class Client {
 	public static void main(String[] args) {
 		
-		String ip = "192.168.0.29";
+		String ip = "10.0.0.119";
 		String pseudo = "obama";
 		Recorder microphone = null;
 

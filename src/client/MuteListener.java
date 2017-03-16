@@ -15,9 +15,12 @@ public class MuteListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		JButton o = (JButton) arg0.getSource();
-		if(o.getName() == "Mute"){
-			System.out.println("MUTE");
+		if(o.getLabel() == "Couper le micro"){
+			o.setLabel("Activer le micro");
 			rec.mute(true);
+		}else{
+			o.setLabel("Couper le micro");
+			rec.mute(false);
 		}
 		
 	}
