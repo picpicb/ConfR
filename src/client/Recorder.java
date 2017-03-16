@@ -18,7 +18,7 @@ public class Recorder extends Thread {
 	public Recorder(OutputStream out){
 		this.out = new BufferedOutputStream(out);
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
-		conditionStop = true;
+		conditionStop = false;
 	}
 
 	public void run(){
@@ -36,7 +36,7 @@ public class Recorder extends Thread {
 			int bytesRead = 0;
 			try {
 				while (true) { 
-					while (!conditionStop) {
+					while (conditionStop) {
 						Thread.sleep(300);
 					}
 					numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
@@ -52,7 +52,7 @@ public class Recorder extends Thread {
 		}
 	}
 
-	public void manageRecording(boolean b){
+	public void mute(boolean b){
 		conditionStop = b;
 	}
 

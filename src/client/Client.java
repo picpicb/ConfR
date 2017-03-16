@@ -8,11 +8,11 @@ import java.net.Socket;
 public class Client {
 	public static void main(String[] args) {
 		
-		String ip = "192.168.43.138";
-		String pseudo = "toto";
+		String ip = "192.168.0.29";
+		String pseudo = "obama";
+		Recorder microphone = null;
+
 		
-		//Creation de l'interface graphique du client
-		//new ClientGUI();
 		
 		
 		//Connexion au serveur pour le micro/data
@@ -21,17 +21,22 @@ public class Client {
 			socket = new Socket(ip, 5300);
 			PrintStream printStream = new PrintStream(socket.getOutputStream());
 			printStream.print(pseudo+"\n");
-			Recorder microphone = new Recorder(socket.getOutputStream());
+			microphone = new Recorder(socket.getOutputStream());
 			microphone.start();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
+		//Creation de l'interface graphique du client
+		
+		
+		ClientGUI gui = new ClientGUI(new MuteListener(microphone));
+		
 		//Ecoute du port 5500 pour les donnees voix
 		HandleServer voix;
 		try {
-			voix = new HandleServer(5500);
+			voix = new HandleServer(5500,gui);
 			voix.start();
 		} catch (IOException e1) {
 			e1.printStackTrace();

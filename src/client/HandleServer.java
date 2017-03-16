@@ -1,6 +1,8 @@
 package client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -8,12 +10,13 @@ import java.net.SocketTimeoutException;
 import javax.sound.sampled.LineUnavailableException;
 
 public class HandleServer extends Thread {
-
+	ClientGUI gui;
 	private int port;
 	ServerSocket ss;
 	private boolean stop = false;
-	public HandleServer(int port) throws IOException {
+	public HandleServer(int port, ClientGUI gui) throws IOException {
 		this.port = port;
+		this.gui = gui;
 		System.out.println("HandleServer : attente de nouvelles voix");
 	}
 
@@ -23,6 +26,9 @@ public class HandleServer extends Thread {
 			while (!stop) {
 				try {
 					Socket s = ss.accept();
+					BufferedReader is = new BufferedReader(new InputStreamReader(s.getInputStream()));
+					String line = is.readLine();
+					gui.addPlayer(line);
 					new Player(s.getInputStream()).start();
 				} catch (SocketTimeoutException ex) {
 				} catch (LineUnavailableException e) {

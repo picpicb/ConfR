@@ -13,12 +13,10 @@ import javax.sound.sampled.LineUnavailableException;
 
 public class ServerVoix extends Thread{
 	boolean stop = false;
-	ArrayList<HandleVoix> listeVoix;
-	ArrayList<VoixSocket> listeRetour;
+	ArrayList<ClientHandler> listeClient;
 
-	public ServerVoix(ArrayList<HandleVoix> listeUser) throws LineUnavailableException{
-		this.listeVoix = listeUser;
-		listeRetour = new ArrayList<VoixSocket>();
+	public ServerVoix() throws LineUnavailableException{
+		this.listeClient = new ArrayList<ClientHandler>();
 	}
 
 
@@ -31,26 +29,18 @@ public class ServerVoix extends Thread{
 					Socket s = ss.accept();
 					BufferedReader is = new BufferedReader(new InputStreamReader(s.getInputStream()));
 					String line = is.readLine();
-					
-					
-					HandleVoix client = new HandleVoix(s,line);
-					System.out.println("Nouveau client connecte au server  Voix: "+ client.getIp());
-					VoixSocket vs = new VoixSocket(client.getSocket().getInputStream(),client.getIp());
-					listeRetour.add(vs);
+					ClientHandler client = new ClientHandler(s,line);
+					listeClient.add(client);
+					//client.sendClientList(listeClient);
+					System.out.println("Nouveau client connecte au server Voix: "+ client.getIp());
 
 
-					for(HandleVoix v : listeVoix){
+					for(ClientHandler v : listeClient){
 						if(v.getIp() != client.getIp()){
-							vs.addRetour(v);
+							client.getVoiceB().addRetour(v,client.getPseudo());
+							v.getVoiceB().addRetour(client,v.getPseudo());
 						}
 					}
-					for(VoixSocket r : listeRetour){
-						if(r.getIp() != client.getIp()){
-							r.addRetour(client);
-						}
-					}
-					listeVoix.add(client);
-					vs.start();
 
 				} catch (SocketTimeoutException ex) {
 				} catch (Exception e) {
@@ -58,7 +48,7 @@ public class ServerVoix extends Thread{
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("ServerGestion: Could not bind port 5400");
+			System.out.println("ServerGestion: Could not bind port 5300");
 		}
 	}
 
