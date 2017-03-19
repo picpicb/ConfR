@@ -30,8 +30,8 @@ public class ServerVoix extends Thread{
 					BufferedReader is = new BufferedReader(new InputStreamReader(s.getInputStream()));
 					String line = is.readLine();
 					ClientHandler client = new ClientHandler(s,line);
+					client.sendClientList(listeClient);
 					listeClient.add(client);
-					//client.sendClientList(listeClient);
 					System.out.println("Nouveau client connecte au server Voix: "+ client.getIp());
 
 
@@ -39,6 +39,7 @@ public class ServerVoix extends Thread{
 						if(v.getIp() != client.getIp()){
 							client.getVoiceB().addRetour(v,client.getPseudo());
 							v.getVoiceB().addRetour(client,v.getPseudo());
+							v.sendClientList(listeClient);
 						}
 					}
 

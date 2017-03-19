@@ -1,8 +1,6 @@
 package client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -26,9 +24,6 @@ public class HandleServer extends Thread {
 			while (!stop) {
 				try {
 					Socket s = ss.accept();
-					BufferedReader is = new BufferedReader(new InputStreamReader(s.getInputStream()));
-					String line = is.readLine();
-					gui.addPlayer(line);
 					new Player(s.getInputStream()).start();
 				} catch (SocketTimeoutException ex) {
 				} catch (LineUnavailableException e) {

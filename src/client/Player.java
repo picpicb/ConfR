@@ -28,7 +28,6 @@ public class Player extends Thread{
 		System.out.println("nouvelle voix !");
 		speaker.start();
 		byte[] data = new byte[1024];
-        System.out.println("Waiting for data...");
         while (true) {
             try {
 				if (streamIn.available() <= 0)

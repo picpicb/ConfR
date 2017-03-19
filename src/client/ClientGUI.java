@@ -2,12 +2,9 @@ package client;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,6 +50,11 @@ public class ClientGUI {
         fenetre.validate();
         fenetre.repaint();
 	}
+	
+	public void clearList(){
+		mainList.removeAll();
+	}
+	
 	public void removePlayer(String name){
 		ArrayList<String> l = new ArrayList<String>();
 		mainList.removeAll();

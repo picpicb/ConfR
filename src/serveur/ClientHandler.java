@@ -44,5 +44,6 @@ public class ClientHandler{
 		for(ClientHandler c : listeClient){
 			printStream.print(c.getPseudo()+"\n");
 		}
+		printStream.println("");
 	}
 }
