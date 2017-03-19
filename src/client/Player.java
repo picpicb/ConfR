@@ -16,6 +16,7 @@ public class Player extends Thread{
 	SourceDataLine speaker;
 	private boolean conditionStop;
 	private String name;
+	private boolean conditionFinish;
 
 	public Player(InputStream is, String name) throws LineUnavailableException{
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
@@ -24,6 +25,7 @@ public class Player extends Thread{
         speaker.open(format);
         streamIn = is;
         conditionStop = false;
+        conditionFinish = false;
         this.name = name;
 	}
 
@@ -31,7 +33,7 @@ public class Player extends Thread{
 		System.out.println("nouvelle voix !");
 		speaker.start();
 		byte[] data = new byte[1024];
-        while (true) {
+        while (!conditionFinish) {
             try {
 				if (streamIn.available() <= 0)
 				    continue;
@@ -53,5 +55,9 @@ public class Player extends Thread{
     	return name;
     }
     
+	public void finish(){
+		conditionFinish = true;
+		
+	}
     
 }

@@ -9,14 +9,18 @@ import java.net.Socket;
 
 public class Client {
 	static Socket socket;
+	static HandleOrder handleO;
+	static Recorder microphone;
 	
 	public static void main(String[] args) {
 		
 		String ip = "192.168.0.30";
-		String pseudo = "JM";
-		Recorder microphone = null;
+		String pseudo = "Mkgiguel";
+		microphone = null;
 		ClientGUI gui = null;
 		socket = null;
+		handleO = null;
+		
 	
 		
 		//Connexion au serveur pour le micro/data
@@ -28,7 +32,8 @@ public class Client {
 			microphone = new Recorder(socket.getOutputStream());
 			microphone.start();
 			gui = new ClientGUI(new MuteListener(microphone));
-			new HandleOrder(gui,socket.getInputStream()).start();
+			handleO = new HandleOrder(gui,socket.getInputStream());
+			handleO.start();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -48,11 +53,19 @@ public class Client {
 		
 		gui.getFrame().addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
+	        	System.out.println("fermeture de l'application");
+	        	handleO.finish();
+	        	microphone.finish();
 	        	try {
+		        	//handleO.join();
+		        	//microphone.join();
 					socket.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				//} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
 				}
 	            System.exit(0);
 	        }

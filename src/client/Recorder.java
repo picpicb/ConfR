@@ -14,11 +14,13 @@ public class Recorder extends Thread {
 	private TargetDataLine microphone;
 	private BufferedOutputStream out;
 	private boolean conditionStop;
+	private boolean conditionFinish;
 
 	public Recorder(OutputStream out){
 		this.out = new BufferedOutputStream(out);
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
 		conditionStop = false;
+		conditionFinish = false;
 	}
 
 	public void run(){
@@ -35,7 +37,7 @@ public class Recorder extends Thread {
 			microphone.start();
 			int bytesRead = 0;
 			try {
-				while (true) { 
+				while (!conditionFinish) { 
 					while (conditionStop) {
 						Thread.sleep(300);
 						microphone.flush();
@@ -45,6 +47,7 @@ public class Recorder extends Thread {
 					//System.out.println(bytesRead);
 					out.write(data, 0, numBytesRead);
 				}
+				out.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -57,4 +60,8 @@ public class Recorder extends Thread {
 		conditionStop = b;
 	}
 
+	public void finish(){
+		conditionFinish = true;
+		
+	}
 }
