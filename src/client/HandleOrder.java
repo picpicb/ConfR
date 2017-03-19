@@ -21,12 +21,11 @@ public class HandleOrder extends Thread{
 				line = bf.readLine();
 				System.out.println("lecture"+line);
 				switch (line) {
-				case "USERLIST":
+				case "DELUSER":
 					gui.clearList();
-					while((line = bf.readLine()).length()>0){
-						System.out.println("lecture"+line);
-						gui.addPlayer(line);
-					}
+					line = bf.readLine();
+					System.out.println("lecture"+line);
+					gui.removePlayer(line);
 					break;
 
 				default:

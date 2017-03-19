@@ -12,16 +12,18 @@ public class ClientHandler{
 	private String ip;
 	private String pseudo;
 	private VoiceBroadcaster emetteur;
+	ServerVoix server;
 
-	public ClientHandler(Socket s,String pseudo) throws IOException{
+	public ClientHandler(Socket s,String pseudo, ServerVoix server) throws IOException{
 		this.s = s;
+		this.server = server;
 		String str = s.getRemoteSocketAddress().toString();
 		String delims = "[/:]+";
 		String[] tokens = str.split(delims);
 		this.ip = tokens[1]; 
 		this.pseudo = pseudo;
 		System.out.println(pseudo+" s'est connecte");
-		emetteur = new VoiceBroadcaster(s.getInputStream(),this.ip);
+		emetteur = new VoiceBroadcaster(s.getInputStream(),this);
 		emetteur.start();
 	}
 
@@ -38,14 +40,14 @@ public class ClientHandler{
 	public VoiceBroadcaster getVoiceB(){
 		return emetteur;
 	}
-	public void sendClientList(ArrayList<ClientHandler> listeClient) throws IOException{
+	public void stopClient() throws IOException{
+		server.notifyClosedClient(this);
+	}
+	public void sendClosedClient(String name) throws IOException{
 		PrintStream printStream = new PrintStream(s.getOutputStream());
-		printStream.print("USERLIST\n");
-		for(ClientHandler c : listeClient){
-			if(c.getPseudo() != pseudo){
-				printStream.print(c.getPseudo()+"\n");
-			}
-		}
+		printStream.print("DELUSER\n");
+		printStream.print(name+"\n");
 		printStream.println("");
 	}
+	
 }

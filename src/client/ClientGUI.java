@@ -1,13 +1,11 @@
 package client;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,15 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
 
-
 public class ClientGUI {
 	JFrame fenetre;
 	JPanel mainList;
 	JButton boutonConnexion;
 	JButton mute;
-	ArrayList<String> listePlayer;
+	ArrayList<Player> listePlayer;
 	public ClientGUI(MuteListener muteListener){
-		listePlayer = new ArrayList<String>();
+		listePlayer = new ArrayList<Player>();
 		fenetre = new JFrame("Confr");
 		fenetre.setSize(200,250);
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +45,7 @@ public class ClientGUI {
 
 	public void addPlayer(Player p){
 		String name = p.getPlayerName();
-		listePlayer.add(name);
+		listePlayer.add(p);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(new JLabel(name),BorderLayout.WEST);
@@ -74,15 +71,19 @@ public class ClientGUI {
 		mainList.removeAll();
 	}
 
-	/*public void removePlayer(String name){
-		ArrayList<String> l = new ArrayList<String>();
+	public void removePlayer(String name){
+		ArrayList<Player> l = listePlayer;
+		listePlayer = null;
 		mainList.removeAll();
-		for(String s : listePlayer){
-			if(s != name){
-				addPlayer(s);
-				l.add(s);
+		for(Player pl : l){
+			if(pl.getName() != name){
+				addPlayer(pl);
 			}
 		}
-	}*/
+	}
+	
+	public JFrame getFrame(){
+		return fenetre;
+	}
 
 }

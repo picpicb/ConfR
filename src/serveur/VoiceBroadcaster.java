@@ -14,11 +14,13 @@ public class VoiceBroadcaster extends Thread{
 	private InputStream voix;
 	ArrayList<Socket> retour;
 	private String ip;
+	ClientHandler ch;
 	
-	public VoiceBroadcaster(InputStream voix,String ip){
+	public VoiceBroadcaster(InputStream voix,ClientHandler c){
 		this.voix = voix;
 		retour = new ArrayList<Socket>();
-		this.ip = ip;
+		ch = c;
+		this.ip = c.getIp();
 	}
 
 	public void run(){
@@ -31,6 +33,7 @@ public class VoiceBroadcaster extends Thread{
 					out.write(buffer, 0, count);
 				}
 			}
+			ch.stopClient();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

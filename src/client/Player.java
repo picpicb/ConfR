@@ -3,7 +3,6 @@ package client;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -53,4 +52,6 @@ public class Player extends Thread{
     public String getPlayerName(){
     	return name;
     }
+    
+    
 }
