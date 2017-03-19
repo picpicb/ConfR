@@ -22,7 +22,6 @@ public class MuteListener implements ActionListener{
 			o.setLabel("Couper le micro");
 			rec.mute(false);
 		}
-		
 	}
 
 }

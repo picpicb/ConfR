@@ -42,7 +42,9 @@ public class ClientHandler{
 		PrintStream printStream = new PrintStream(s.getOutputStream());
 		printStream.print("USERLIST\n");
 		for(ClientHandler c : listeClient){
-			printStream.print(c.getPseudo()+"\n");
+			if(c.getPseudo() != pseudo){
+				printStream.print(c.getPseudo()+"\n");
+			}
 		}
 		printStream.println("");
 	}

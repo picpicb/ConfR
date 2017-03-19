@@ -15,13 +15,17 @@ public class Player extends Thread{
 	AudioFormat format;// = new AudioFormat(8000.0f, 16, 1, true, true);
 	InputStream streamIn;
 	SourceDataLine speaker;
+	private boolean conditionStop;
+	private String name;
 
-	public Player(InputStream is) throws LineUnavailableException{
+	public Player(InputStream is, String name) throws LineUnavailableException{
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
 		DataLine.Info speakerInfo = new DataLine.Info(SourceDataLine.class, format);
 		speaker = (SourceDataLine) AudioSystem.getLine(speakerInfo);
         speaker.open(format);
         streamIn = is;
+        conditionStop = false;
+        this.name = name;
 	}
 
 	public void run(){
@@ -33,7 +37,7 @@ public class Player extends Thread{
 				if (streamIn.available() <= 0)
 				    continue;
 				int readCount= streamIn.read(data, 0, data.length);
-	            if(readCount>0){
+	            if(readCount>0 && !conditionStop){
 	                speaker.write(data, 0, readCount);
 	            }
 			} catch (IOException e) {
@@ -41,36 +45,12 @@ public class Player extends Thread{
 			}  
 
         }
-		
-		
-		
-		
-		
-		
-		
-		/*try{
-			DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, format);
-			speaker = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
-
-			speaker.open(format);
-			speaker.start();
-
-			int cnt = 0;
-			byte tempBuffer[] = new byte[10000];
-			try {
-				while ((cnt = audioInputStream.read(tempBuffer, 0,tempBuffer.length)) != -1) {
-					if (cnt > 0) {
-						speaker.write(tempBuffer, 0, cnt);
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			speaker.drain();
-			speaker.close();
-			speaker.close();
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
-		}*/
 	}
+    public void mute(boolean b){
+		conditionStop = b;
+	}
+    
+    public String getPlayerName(){
+    	return name;
+    }
 }
