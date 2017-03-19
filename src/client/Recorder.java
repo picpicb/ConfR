@@ -16,6 +16,14 @@ public class Recorder extends Thread {
 	private boolean conditionStop;
 	private boolean conditionFinish;
 
+	
+	/*
+	 *  Le Recorder est un thread qui enregistre la voix et la diffuse dans un outputStream.
+	 *  Il s'agit de la sortie du socket qui relie le client et le serveur
+	 * 
+	 * 
+	 */
+	
 	public Recorder(OutputStream out){
 		this.out = new BufferedOutputStream(out);
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
@@ -39,6 +47,7 @@ public class Recorder extends Thread {
 			try {
 				while (!conditionFinish) { 
 					while (conditionStop) {
+						//si on veut couper son micro, le flux et vidé pour éviter le décallage.
 						Thread.sleep(300);
 						microphone.flush();
 					}

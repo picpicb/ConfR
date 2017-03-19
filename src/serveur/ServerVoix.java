@@ -21,7 +21,7 @@ public class ServerVoix extends Thread{
 
 
 	public void run(){
-		System.out.println("Lancement du server Voix");
+		System.out.println("SERVEUR : Lancement du server Voix port 5300");
 		try (ServerSocket ss = new ServerSocket(5300)) {
 			ss.setSoTimeout(1000);
 			while (!stop) {
@@ -32,7 +32,7 @@ public class ServerVoix extends Thread{
 					ClientHandler client = new ClientHandler(s,line,this);
 					
 					listeClient.add(client);
-					System.out.println("Nouveau client connecte au server Voix: "+ client.getIp());
+					System.out.println("SERVEUR : Nouveau client connecte au server Voix: "+ client.getIp());
 
 
 					for(ClientHandler v : listeClient){
@@ -49,7 +49,7 @@ public class ServerVoix extends Thread{
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("ServerGestion: Could not bind port 5300");
+			System.out.println("SERVEUR : Could not bind port 5300");
 		}
 	}
 

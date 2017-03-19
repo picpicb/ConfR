@@ -18,6 +18,18 @@ public class Player extends Thread{
 	private String name;
 	private boolean conditionFinish;
 
+	
+	
+	/*
+	 *  Le Player est un thread qui prend en en charge la voix de quelqu'un.
+	 *  Il diffuse dans les hauts parleurs l'inputStream et mémorise le nom de la personne
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	
 	public Player(InputStream is, String name) throws LineUnavailableException{
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
 		DataLine.Info speakerInfo = new DataLine.Info(SourceDataLine.class, format);
@@ -30,7 +42,7 @@ public class Player extends Thread{
 	}
 
 	public void run(){
-		System.out.println("nouvelle voix !");
+		System.out.println("CLIENT : nouvelle voix !");
 		speaker.start();
 		byte[] data = new byte[1024];
         while (!conditionFinish) {

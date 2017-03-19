@@ -18,9 +18,9 @@ import javax.swing.border.MatteBorder;
 public class ClientGUI {
 	JFrame fenetre;
 	JPanel mainList;
-	JButton boutonConnexion;
 	JButton mute;
 	ArrayList<Player> listePlayer;
+	
 	public ClientGUI(MuteListener muteListener){
 		listePlayer = new ArrayList<Player>();
 		fenetre = new JFrame("Confr");
@@ -33,16 +33,20 @@ public class ClientGUI {
 
 
 
-		//boutonConnexion = new JButton("Connexion");
 		mute = new JButton("Couper le micro");
 		mute.addActionListener(muteListener);
 
-		//fenetre.add(boutonConnexion,BorderLayout.NORTH);
 		fenetre.add(mainList, BorderLayout.CENTER);
 		fenetre.add(mute,BorderLayout.SOUTH);
 		fenetre.setVisible(true);
 	}
 
+	/*
+	 * Ajout d'une nouvelle voix dans la liste
+	 * Chaque personne connecté peut être coupé
+	 * 
+	 */
+	
 	public void addPlayer(Player p){
 		String name = p.getPlayerName();
 		listePlayer.add(p);
@@ -62,6 +66,7 @@ public class ClientGUI {
 		JCheckBox ch = new JCheckBox("mute");
 		ch.addActionListener(actionListener);
 		panel.add(ch, BorderLayout.EAST);
+		
 		mainList.add(panel);
 		fenetre.validate();
 		fenetre.repaint();

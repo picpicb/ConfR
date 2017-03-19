@@ -19,7 +19,7 @@ public class HandleServer extends Thread {
 		this.port = port;
 		this.gui = gui;
 		listePlayer = new ArrayList<Socket>();
-		System.out.println("HandleServer : attente de nouvelles voix");
+		System.out.println("CLIENT : attente de nouvelles voix");
 	}
 
 	public void run() {

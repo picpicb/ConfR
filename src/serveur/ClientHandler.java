@@ -14,6 +14,14 @@ public class ClientHandler{
 	private VoiceBroadcaster emetteur;
 	ServerVoix server;
 
+	/*
+	 * 
+	 * ClientHandler regroupe les informations du client qui vient de se connecter.
+	 * Chaque ClientHandler possède un emetteur(VoiceBroadcaster) qui diffuse la voix du client à d'autres clients.
+	 * 
+	 */
+	
+	
 	public ClientHandler(Socket s,String pseudo, ServerVoix server) throws IOException{
 		this.s = s;
 		this.server = server;

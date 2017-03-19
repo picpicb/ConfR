@@ -27,6 +27,9 @@ public class VoiceBroadcaster extends Thread{
 		byte buffer[] = new byte[4096];
 		int count;
 		try {
+			
+			// lecture d'un bloc du flux, et envoie à tous les autres 1 par 1.
+			// Impossible d'envoyer le flux en même temps à tout le monde.
 			while ((count = voix.read(buffer)) != -1){
 				for(Socket s : retour){
 					OutputStream out = s.getOutputStream();
@@ -39,6 +42,7 @@ public class VoiceBroadcaster extends Thread{
 		}
 	}
 	
+	//Ajout d'un client à qui il faut envoyer cette voix 
 	
 	public void addRetour(ClientHandler v, String pseudo){
 		Socket s = null;

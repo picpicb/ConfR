@@ -23,6 +23,8 @@ public class HandleOrder extends Thread{
 				line = bf.readLine();
 				System.out.println("lecture"+line);
 				switch (line) {
+				
+				// DELUSER NON TERMINE
 				case "DELUSER":
 					gui.clearList();
 					line = bf.readLine();
