@@ -31,19 +31,19 @@ public class ServerVoix extends Thread{
 					String line = is.readLine();
 					ClientHandler client = new ClientHandler(s,line,this);
 					
-					listeClient.add(client);
+					
 					System.out.println("SERVEUR : Nouveau client connecte au server Voix: "+ client.getIp());
 
 					
 					for(ClientHandler v : listeClient){
 						System.out.println("v "+v.getIp()+"client "+client.getIp());
-						if(v.getIp().compareTo(client.getIp())!=0){
+						if(v.getIp() != client.getIp()){
 							client.getVoiceB().addRetour(v,client.getPseudo());
 							v.getVoiceB().addRetour(client,v.getPseudo());
 							
 						}
 					}
-
+					listeClient.add(client);
 				} catch (SocketTimeoutException ex) {
 				} catch (Exception e) {
 					e.printStackTrace();

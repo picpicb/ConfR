@@ -24,8 +24,8 @@ public class Recorder extends Thread {
 	 * 
 	 */
 	
-	public Recorder(OutputStream out){
-		this.out = new BufferedOutputStream(out);
+	public Recorder(){
+		this.out = null;
 		format = new AudioFormat(8000.0f, 16, 1, true, true);
 		conditionStop = false;
 		conditionFinish = false;

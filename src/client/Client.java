@@ -41,9 +41,9 @@ public class Client {
 
 			
 			// création du thread qui enregistre et envoie
-			OutputStream out = null;
-			microphone = new Recorder(out);
-			microphone.start();
+		
+			microphone = new Recorder();
+			
 			
 			// création de l'interface graphique
 			gui = new ClientGUI(new MuteListener(microphone));
@@ -56,7 +56,7 @@ public class Client {
 			printStream.print(pseudo+"\n");
 			
 			microphone.setOutput(socket.getOutputStream());
-			
+			microphone.start();
 			// création du thread qui écoute les commandes du serveur
 			handleO = new HandleOrder(gui,socket.getInputStream());
 			handleO.start();
