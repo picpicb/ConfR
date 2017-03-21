@@ -34,9 +34,10 @@ public class ServerVoix extends Thread{
 					listeClient.add(client);
 					System.out.println("SERVEUR : Nouveau client connecte au server Voix: "+ client.getIp());
 
-
+					
 					for(ClientHandler v : listeClient){
-						if(v.getIp() != client.getIp()){
+						System.out.println("v "+v.getIp()+"client "+client.getIp());
+						if(v.getIp().compareTo(client.getIp())!=0){
 							client.getVoiceB().addRetour(v,client.getPseudo());
 							v.getVoiceB().addRetour(client,v.getPseudo());
 							

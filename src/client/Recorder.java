@@ -65,6 +65,10 @@ public class Recorder extends Thread {
 		}
 	}
 
+	public void setOutput(OutputStream o){
+		this.out = new BufferedOutputStream(o);
+	}
+	
 	public void mute(boolean b){
 		conditionStop = b;
 	}

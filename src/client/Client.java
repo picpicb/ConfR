@@ -4,6 +4,7 @@ package client;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public class Client {
 		ClientGUI gui = null;
 		socket = null;
 		handleO = null;
-		
+		HandleServer voix;
 	
 		
 		/* Connexion au serveur avec un premier socket
@@ -37,16 +38,24 @@ public class Client {
 		 */
 		
 		try {
-			socket = new Socket(ip, 5300);
-			PrintStream printStream = new PrintStream(socket.getOutputStream());
-			printStream.print(pseudo+"\n");
+
 			
 			// création du thread qui enregistre et envoie
-			microphone = new Recorder(socket.getOutputStream());
+			OutputStream out = null;
+			microphone = new Recorder(out);
 			microphone.start();
 			
 			// création de l'interface graphique
 			gui = new ClientGUI(new MuteListener(microphone));
+			voix = new HandleServer(5500,gui);
+			voix.start();
+			
+
+			socket = new Socket(ip, 5300);
+			PrintStream printStream = new PrintStream(socket.getOutputStream());
+			printStream.print(pseudo+"\n");
+			
+			microphone.setOutput(socket.getOutputStream());
 			
 			// création du thread qui écoute les commandes du serveur
 			handleO = new HandleOrder(gui,socket.getInputStream());
@@ -68,14 +77,7 @@ public class Client {
 		 * 
 		 */
 		
-		HandleServer voix;
-		try {
-			voix = new HandleServer(5500,gui);
-			voix.start();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
+
 		
 		
 		/*

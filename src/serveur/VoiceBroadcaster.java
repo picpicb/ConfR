@@ -47,6 +47,7 @@ public class VoiceBroadcaster extends Thread{
 	public void addRetour(ClientHandler v, String pseudo){
 		Socket s = null;
 		try {
+			System.out.println("addretour : "+v.getIp());
 			s = new Socket(v.getIp(), 5500);
 			PrintStream printStream = new PrintStream(s.getOutputStream());
 			printStream.print(pseudo+"\n");
